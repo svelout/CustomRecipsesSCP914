@@ -136,6 +136,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="UnityEngine.TerrainPhysicsModule">
       <HintPath>..\..\..\..\..\..\sl_server\SCPSL_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
     </Reference>
@@ -164,6 +165,7 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="CustomRecipe.cs" />
+    <Compile Include="EventHandler.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
