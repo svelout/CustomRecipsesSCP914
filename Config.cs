@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using CustomPlayerEffects;
 using Exiled.API.Enums;
+using PlayerRoles;
 
 namespace CustomRecipsesSCP914
 {
@@ -16,8 +17,8 @@ namespace CustomRecipsesSCP914
         [Description("Выключен по дефолту")]
         public bool Debug { get; set; } = false;
         [Description("Имя конфиг файла")]
-        public string ConfigFile { get; set; } = "FileName";
+        public string ConfigFile { get; set; } = "Example.yaml";
         [Description("Рецепты")]
-        public List<Recipe> recipes { get; set; } = new List<Recipe>();
+        public List<Recipe> recipes = new List<Recipe>();
     }
 }
