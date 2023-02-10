@@ -27,19 +27,27 @@ namespace CustomRecipsesSCP914
         Random r = new Random();
         public void OnUpgradingPickup(UpgradingPickupEventArgs ev)
         {
+
             if (ev.Pickup.Type != null)
             {
                 foreach (Recipe recipe in Plugin.Instance.Config.recipes)
                 {
                     if (ev.Pickup.Type == recipe.old_item)
                     {
-                        var chance = GetResultFromChance(recipe.chance);
-                        if (chance == true)
+                        if (ev.KnobSetting == recipe.setting)
                         {
-                            Upgradeitem(ev.Pickup, recipe.new_item, ev.Scp914.OutputChamber.position);
-                            ev.IsAllowed = false;
+                            var chance = GetResultFromChance(recipe.chance);
+                            if (chance == true)
+                            {
+                                Upgradeitem(ev.Pickup, recipe.new_item, ev.Scp914.OutputChamber.position);
+                                ev.IsAllowed = false;
+                                break;
+                            }
+                            else ev.Pickup.Destroy();
+                            break;
                         }
                     }
+                    else continue;
                 }
             }              
         }
@@ -50,7 +58,19 @@ namespace CustomRecipsesSCP914
         
         public void OnUpgradingPlayer(UpgradingPlayerEventArgs ev)
         {
-
+            if (ev.Player != null && ev.Player.Role.Side != Side.Scp)
+            {
+                foreach(Recipe recipe in Plugin.Instance.Config.recipes)
+                {
+                    if (ev.UpgradeItems != false && recipe.old_item != ItemType.None)
+                    {
+                        if (recipe.new_effect != null)
+                        {
+                            UpgradingEffect(ev.Player, recipe.new_effect, recipe.duration, ev.OutputPosition);
+                        }
+                    }
+                }
+            }
         }
         public void OnActivating(ActivatingEventArgs ev)
         {
@@ -75,13 +95,18 @@ namespace CustomRecipsesSCP914
             }
         }
 
-        internal void UpgradingEffect(Player player, Pickup old_item, EffectType new_effect, float duration, Vector3 pos)
+        internal void UpgradingEffect(Player player, EffectType new_effect, float duration, Vector3 pos, Pickup old_item = null)
         {
+            bool ds = true;
+            if (old_item == null)
+                ds = false;
             if (new_effect != null)
             {
                 player.EnableEffect(new_effect, duration: duration);
+                player.Position.Set(pos.x, pos.y, pos.z);
             }
-            old_item.Destroy();
+            if (ds != false)
+                old_item.Destroy();
         }
         private bool GetResultFromChance(int chance)
         {

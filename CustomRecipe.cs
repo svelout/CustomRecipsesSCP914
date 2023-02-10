@@ -22,9 +22,11 @@ namespace CustomRecipsesSCP914
     {
         public ItemType old_item { get; set; }
         public int chance { get; set; }
+        public Scp914KnobSetting setting { get; set; }
         public EffectType new_effect { get; set; }
         public RoleTypeId new_role { get; set; }
         public ItemType new_item { get; set; }
+        public float duration { get; set; }
     }
     public class CustomRecipe : Recipe
     {
