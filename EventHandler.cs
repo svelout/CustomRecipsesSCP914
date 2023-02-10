@@ -27,17 +27,16 @@ namespace CustomRecipsesSCP914
         Random r = new Random();
         public void OnUpgradingPickup(UpgradingPickupEventArgs ev)
         {
-
             if (ev.Pickup.Type != null)
             {
-                foreach (Recipe recipe in Plugin.Instance.Config.recipes)
+                foreach (Recipe recipe in Config.recipes)
                 {
                     if (ev.Pickup.Type == recipe.old_item)
                     {
                         if (ev.KnobSetting == recipe.setting)
                         {
                             var chance = GetResultFromChance(recipe.chance);
-                            if (chance == true)
+                            if (chance != false)
                             {
                                 Upgradeitem(ev.Pickup, recipe.new_item, ev.Scp914.OutputChamber.position);
                                 ev.IsAllowed = false;
@@ -51,30 +50,47 @@ namespace CustomRecipsesSCP914
                 }
             }              
         }
+        
         public void OnUpgradingInventoryItem(UpgradingInventoryItemEventArgs ev)
         {
-            
-        }
+            if (ev.Item != null)
+            {
+                foreach (Recipe recipe in Config.recipes)
+                {
+                    if (ev.KnobSetting == recipe.setting && recipe.old_item != null && ev.Item.Type == recipe.old_item)
+                    {
+                        var chance = GetResultFromChance(recipe.chance);
+                        if (chance != false)
+                        {
+                            ev.Player.RemoveItem(ev.Item);
+                            ev.Player.AddItem(recipe.new_item);
+                            break;
+                        }
+                    }
+                }
+            }
+        } 
         
         public void OnUpgradingPlayer(UpgradingPlayerEventArgs ev)
         {
             if (ev.Player != null && ev.Player.Role.Side != Side.Scp)
             {
-                foreach(Recipe recipe in Plugin.Instance.Config.recipes)
+                foreach(Recipe recipe in Config.recipes)
                 {
-                    if (ev.UpgradeItems != false && recipe.old_item != ItemType.None)
+                    if (recipe.new_effect != null && recipe.duration != 0f && recipe.chance != null)
                     {
-                        if (recipe.new_effect != null)
-                        {
+                        var chance = GetResultFromChance(recipe.chance);
+                        if (chance != false)
                             UpgradingEffect(ev.Player, recipe.new_effect, recipe.duration, ev.OutputPosition);
-                        }
+                    }
+                    else if (recipe.new_role != null && recipe.chance != null)
+                    {
+                        var chance = GetResultFromChance(recipe.chance);
+                        if (chance != false)
+                            UpdrageRole(ev.Player, recipe.new_role, ev.OutputPosition);
                     }
                 }
             }
-        }
-        public void OnActivating(ActivatingEventArgs ev)
-        {
-            
         }
 
         internal void Upgradeitem(Pickup old_item, ItemType newItem, Vector3 pos)
@@ -113,7 +129,7 @@ namespace CustomRecipsesSCP914
             if (chance == 0) return false;
             if (chance == 100) return true;
             int ran = r.Next(100);
-            if (ran < chance) return true;
+            if (ran <= chance) return true;
             else return false;          
         }
     }
