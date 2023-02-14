@@ -9,35 +9,38 @@ namespace CustomRecipsesSCP914
     {
         public override string Name => "CustomRecipesSCP914";
         public override string Author => "SveloutDevelop";
-        public override string Prefix => base.Prefix;
-        public static Plugin Instance { get; set; }
+        public override string Prefix => "custom_recipes_scp914";
+        public static Plugin Instance;
 
-        private EventHandler eh;
+        private EventHandler _eh;
         public override void OnEnabled()
         {
+            Instance = this;
+            OnRegisterEvents();
             base.OnEnabled();
         }
         public override void OnDisabled()
         {
+            OnUnregisterEvents();
             base.OnDisabled();
         }
 
         public void OnRegisterEvents()
         {
-            eh = new EventHandler();
-            Server.WaitingForPlayers += eh.OnWaitingPlayers;
-            SCP914.UpgradingInventoryItem += eh.OnUpgradingInventoryItem;
-            SCP914.UpgradingPlayer += eh.OnUpgradingPlayer;
-            SCP914.UpgradingPickup += eh.OnUpgradingPickup;
+            _eh = new EventHandler();
+            Server.WaitingForPlayers += _eh.OnWaitingPlayers;
+            SCP914.UpgradingInventoryItem += _eh.OnUpgradingInventoryItem;
+            SCP914.UpgradingPlayer += _eh.OnUpgradingPlayer;
+            SCP914.UpgradingPickup += _eh.OnUpgradingPickup;
             
         }
         public void OnUnregisterEvents()
         {
-            eh = null;
-            Server.WaitingForPlayers -= eh.OnWaitingPlayers;
-            SCP914.UpgradingInventoryItem -= eh.OnUpgradingInventoryItem;
-            SCP914.UpgradingPlayer -= eh.OnUpgradingPlayer;
-            SCP914.UpgradingPickup -= eh.OnUpgradingPickup;
+            _eh = null;
+            Server.WaitingForPlayers -= _eh.OnWaitingPlayers;
+            SCP914.UpgradingInventoryItem -= _eh.OnUpgradingInventoryItem;
+            SCP914.UpgradingPlayer -= _eh.OnUpgradingPlayer;
+            SCP914.UpgradingPickup -= _eh.OnUpgradingPickup;
         }
     }
 }

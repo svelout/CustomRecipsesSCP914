@@ -181,4 +181,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy  "$(TargetPath)"  "C:\Users\stepa\AppData\Roaming\EXILED\Plugins" /y
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

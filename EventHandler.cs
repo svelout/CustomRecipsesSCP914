@@ -22,7 +22,7 @@ namespace CustomRecipsesSCP914
     {
         public void OnWaitingPlayers()
         {
-            InjectConfig();
+            //InjectConfig();
         }
         Random r = new Random();
         public void OnUpgradingPickup(UpgradingPickupEventArgs ev)
@@ -31,14 +31,14 @@ namespace CustomRecipsesSCP914
             {
                 foreach (Recipe recipe in Config.recipes)
                 {
-                    if (ev.Pickup.Type == recipe.old_item)
+                    if (ev.Pickup.Type == recipe.OldItem)
                     {
-                        if (ev.KnobSetting == recipe.setting)
+                        if (ev.KnobSetting == recipe.Setting)
                         {
-                            var chance = GetResultFromChance(recipe.chance);
+                            var chance = GetResultFromChance(recipe.Chance);
                             if (chance != false)
                             {
-                                Upgradeitem(ev.Pickup, recipe.new_item, ev.Scp914.OutputChamber.position);
+                                Upgradeitem(ev.Pickup, recipe.NewItem, ev.Scp914.OutputChamber.position);
                                 ev.IsAllowed = false;
                                 break;
                             }
@@ -57,13 +57,13 @@ namespace CustomRecipsesSCP914
             {
                 foreach (Recipe recipe in Config.recipes)
                 {
-                    if (ev.KnobSetting == recipe.setting && recipe.old_item != null && ev.Item.Type == recipe.old_item)
+                    if (ev.KnobSetting == recipe.Setting && recipe.OldItem != null && ev.Item.Type == recipe.OldItem)
                     {
-                        var chance = GetResultFromChance(recipe.chance);
+                        var chance = GetResultFromChance(recipe.Chance);
                         if (chance != false)
                         {
                             ev.Player.RemoveItem(ev.Item);
-                            ev.Player.AddItem(recipe.new_item);
+                            ev.Player.AddItem(recipe.NewItem);
                             break;
                         }
                     }
@@ -77,17 +77,17 @@ namespace CustomRecipsesSCP914
             {
                 foreach(Recipe recipe in Config.recipes)
                 {
-                    if (recipe.new_effect != null && recipe.duration != 0f && recipe.chance != null)
+                    if (recipe.NewEffect != null && recipe.Duration != 0f && recipe.Chance != null)
                     {
-                        var chance = GetResultFromChance(recipe.chance);
+                        var chance = GetResultFromChance(recipe.Chance);
                         if (chance != false)
-                            UpgradingEffect(ev.Player, recipe.new_effect, recipe.duration, ev.OutputPosition);
+                            UpgradingEffect(ev.Player, recipe.NewEffect, recipe.Duration, ev.OutputPosition);
                     }
-                    else if (recipe.new_role != null && recipe.chance != null)
+                    else if (recipe.NewRole != null && recipe.Chance != null)
                     {
-                        var chance = GetResultFromChance(recipe.chance);
+                        var chance = GetResultFromChance(recipe.Chance);
                         if (chance != false)
-                            UpdrageRole(ev.Player, recipe.new_role, ev.OutputPosition);
+                            UpdrageRole(ev.Player, recipe.NewRole, ev.OutputPosition);
                     }
                 }
             }
@@ -119,7 +119,7 @@ namespace CustomRecipsesSCP914
             if (new_effect != null)
             {
                 player.EnableEffect(new_effect, duration: duration);
-                player.Position.Set(pos.x, pos.y, pos.z);
+                player.Position = pos;
             }
             if (ds != false)
                 old_item.Destroy();

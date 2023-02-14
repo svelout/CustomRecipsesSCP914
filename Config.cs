@@ -19,6 +19,14 @@ namespace CustomRecipsesSCP914
         [Description("Имя конфиг файла")]
         public string ConfigFile { get; set; } = "Example.yaml";
         [Description("Рецепты")]
-        public List<Recipe> recipes = new List<Recipe>();
+        public List<Recipe> recipes = new List<Recipe>()
+        {
+            new Recipe()
+            {
+                OldItem = ItemType.KeycardO5,
+                Setting = Scp914KnobSetting.VeryFine,
+                NewItem = ItemType.MicroHID
+            }
+        };
     }
 }

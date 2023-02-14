@@ -11,23 +11,20 @@ using MEC;
 using Exiled.API.Enums;
 using Exiled.API.Features.Pickups;
 using PlayerRoles;
-//public List<Scp914KnobSetting> machine_settings = new List<Scp914KnobSetting>();
-//public List<Scp914Mode> _914mode = new List<Scp914Mode>();
-//public List<Scp914Sound> _914sound = new List<Scp914Sound>();
-//public List<Scp914KnobSetting> result = new List<Scp914KnobSetting>();
 
 namespace CustomRecipsesSCP914
 {
-    public class Recipe : Plugin
-    {
-        public ItemType old_item { get; set; }
-        public int chance { get; set; }
-        public Scp914KnobSetting setting { get; set; }
-        public EffectType new_effect { get; set; }
-        public RoleTypeId new_role { get; set; }
-        public ItemType new_item { get; set; }
-        public float duration { get; set; }
+    public class Recipe : Plugin 
+    { 
+        public ItemType OldItem { get;  set; }
+        public int Chance { get; set; }
+        public Scp914KnobSetting Setting { get; set; }
+        public EffectType NewEffect { get; set; }
+        public RoleTypeId NewRole { get; set; }
+        public ItemType NewItem { get; set; }
+        public float Duration { get; set; }
     }
+
     public class CustomRecipe : Recipe
     {
         public void InjectConfig()
@@ -42,11 +39,11 @@ namespace CustomRecipsesSCP914
                 {
                     Plugin.Instance.Config.recipes.Add(new Recipe()
                     {
-                        old_item = result.old_item,
-                        chance = result.chance,
-                        new_effect = result.new_effect,
-                        new_role = result.new_role,
-                        new_item = result.new_item
+                        OldItem = result.OldItem,
+                        Chance = result.Chance,
+                        NewEffect = result.NewEffect,
+                        NewRole = result.NewRole,
+                        NewItem = result.NewItem
                     });
                 }
             }
