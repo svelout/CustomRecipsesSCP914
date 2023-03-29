@@ -8,8 +8,10 @@ namespace CustomRecipesSCP914
 {
     public class Config : IConfig
     {
-        [Description("Включен ли плагин")] public bool IsEnabled { get; set; } = true;
-        [Description("Дебаг")] public bool Debug { get; set; } = false;
+        [Description("Включен ли плагин")] 
+        public bool IsEnabled { get; set; } = true;
+        [Description("Дебаг")] 
+        public bool Debug { get; set; } = false;
 
         [Description("Логи после того как игрок используется рецепт")]
         public bool Logs { get; set; } = false;
